@@ -1,14 +1,23 @@
-Sugarscape
-====
+# Sugarscape
 
-Visualization of sugarscape: http://www.delanceyplace.com/view_archives.php?2260
+Visualization of sugarscape:
 
- * TODO: implement death by natural causes
+* http://sugarscape.herokuapp.com/
+* http://en.wikipedia.org/wiki/Sugarscape
+* http://www.delanceyplace.com/view_archives.php?2260
 
- * TODO: implement auto-iteration
- * TODO: implement click to display stats
- * TODO: record and display agent history
- * TODO: record and display square history
- * TODO: display graph of wealth distribution
- * TODO: add ability to track progress of an individual agent
+## Tests
 
+Tests with QUnit. Open `test/index.html` in your browser.
+
+## TODO
+
+* Backfill tests
+* On initialization, an Agent should have an age minor than its lifetime
+* implement random agent births
+* implement click to display stats
+* record and display agent history
+* record and display square history
+* display graph of wealth distribution
+* add ability to track progress of an individual agent
+* allow configuration parameters to be edited through a form

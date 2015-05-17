@@ -6,16 +6,18 @@ Sugarscape = {
 
 Sugarscape.Agent = function(id, grid, square) {
   this.id = id;
-  this.currentSugar = 1;
+  this.currentSugar       = Sugarscape.random(1, 10);
   this.visionRange        = Sugarscape.random(1, 6);
   this.metabolizationRate = Sugarscape.random(1, 4);
-  this.maxLifetime        = Sugarscape.random(20, 100);
-  this.grid = grid;
+  this.maxLifetime        = Sugarscape.random(20, 300);
+  this.age                = Sugarscape.random(0, 100);
+  this.grid               = grid;
   this.moveTo(square);
 }
+
 Sugarscape.Agent.prototype = {
   isAlive: function() {
-    return this.currentSugar > 0;
+    return this.currentSugar > 0 && this.age <= this.maxLifetime;
   },
   forage: function() {
     if (this.isAlive()) {
@@ -23,6 +25,7 @@ Sugarscape.Agent.prototype = {
       this.moveTo(sweetestSquare);
       this.eatSugar();
       this.metabolizeSugar();
+      this.growOlder();
     }
   },
   sweetestVisibleSquare: function() {
@@ -51,6 +54,7 @@ Sugarscape.Agent.prototype = {
         }
       }
     };
+    // FIXME: Should be the closest
     var sweetest = sweetestSquares[Sugarscape.random(0, sweetestSquares.length - 1)];
     // if (sweetest == undefined) {
     //   console.log('id:', this.id, 'agent:', this);
@@ -91,6 +95,9 @@ Sugarscape.Agent.prototype = {
     // if (this.id < 3) { console.log('id:', this.id, 'sugarBeforeMetabolizing: ', this.currentSugar); }
     this.currentSugar -= this.metabolizationRate
     // if (this.id < 3) { console.log('id:', this.id, 'sugarAfterMetabolizing: ', this.currentSugar); }
+  },
+  growOlder: function() {
+    this.age += 1;
   }
 }
 
@@ -98,6 +105,7 @@ Sugarscape.Grid = function() {
   this.width = 50;
   this.height = 50;
   this.numAgents = 250;
+  this.growthProbability = 0.1;
   this.initPeaks();
   this.initSquares();
   this.initAgents();
@@ -192,7 +200,9 @@ Sugarscape.Grid.prototype = {
   },
   growSugar: function() {
     this.eachSquare(function(square) {
-      square.growSugar();
+      if (this.growthProbability > Math.random()) {
+        square.growSugar();
+      }
     });
   }
 }
@@ -234,9 +244,8 @@ Sugarscape.GridView = function(grid) {
 Sugarscape.GridView.prototype = {
   render: function() {
     if (this.el == null) {
-      this.el = document.createElement('div');
+      this.el = document.getElementById('sugarscape');
       this.el.setAttribute('class', 'grid');
-      document.body.appendChild(this.el);
       for (var x = 0; x < this.grid.squares.length; x++) {
         this.squareViews[x] = [];
         var row = this.grid.squares[x];

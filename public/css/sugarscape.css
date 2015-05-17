@@ -1,11 +1,25 @@
 body {
   background-color: #666;
   color: #FFF;
+  text-align: center;
 }
+
+table {
+  margin: 1em auto;
+}
+td {
+  padding: 1em;
+}
+td.alive-false {
+  background: black;
+  color: gray;
+}
+
 .grid {
   width: 500px;
   height: 500px;
   margin: auto;
+  background: white;
 }
 .square {
   width: 10px;
@@ -13,13 +27,18 @@ body {
   color: #000;
   float: left;
 }
-.sugar-4 { background-color: #FFF; }
-.sugar-3 { background-color: #CBB; }
+.sugar-0 { background-color: #FFF; }
+.sugar-1 { background-color: #CBB; }
 .sugar-2 { background-color: #C99; }
-.sugar-1 { background-color: #C66; }
-.sugar-0 { background-color: #C33; }
+.sugar-3 { background-color: #C66; }
+.sugar-4 { background-color: #C33; }
 
-.occupied { background-color: #006; }
+.occupied {
+  background-color: #020;
+  border-radius: 10px;
+}
 .dead { background-color: default; }
 
-.agent-1 { background-color: #0F0; }
+#form_controls {
+  margin: 1em;
+}
